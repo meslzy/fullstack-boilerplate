@@ -1,0 +1,28 @@
+{
+  "name": "bundle",
+  "version": "1.0.0",
+  "bin": {
+    "bundle": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc --build",
+    "lint": "eslint source --fix"
+  },
+  "dependencies": {
+    "commander": "^9.4.1",
+    "vite": "^3.2.4",
+    "vite-tsconfig-paths": "^3.6.0",
+    "@vitejs/plugin-react": "^2.2.0",
+    "sass": "^1.56.1",
+    "webpack": "^5.75.0",
+    "tsconfig-paths-webpack-plugin": "^4.0.0",
+    "esbuild-loader": "^2.20.0",
+    "nodemon-webpack-plugin": "^4.8.1",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/webpack-node-externals": "^2.5.3"
+  },
+  "private": true
+}

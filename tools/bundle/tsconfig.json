@@ -1,0 +1,15 @@
+{
+  "extends": "tsconfig-config/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "source",
+    "outDir": "dist",
+    //
+    "noEmit": false
+  },
+  "include": [
+    "source"
+  ],
+  "exclude": [
+    "dist"
+  ]
+}

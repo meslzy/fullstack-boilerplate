@@ -1,0 +1,29 @@
+{
+  "extends": "tsconfig-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "source",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@server/*": [
+        "./server/*"
+      ],
+      "@application/*": [
+        "./server/application/*"
+      ],
+      "@database/*": [
+        "./server/database/*"
+      ],
+      "@colyseus/*": [
+        "./server/colyseus/*"
+      ]
+    }
+  },
+  "include": [
+    "source"
+  ],
+  "exclude": [
+    "dist"
+  ]
+}

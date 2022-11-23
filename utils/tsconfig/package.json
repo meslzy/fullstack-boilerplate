@@ -1,0 +1,9 @@
+{
+  "name": "tsconfig-config",
+  "version": "1.0.0",
+  "main": "tsconfig.json",
+  "peerDependencies": {
+    "typescript": ">=4"
+  },
+  "private": true
+}

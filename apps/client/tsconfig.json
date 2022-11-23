@@ -1,0 +1,35 @@
+{
+  "extends": "tsconfig-config/tsconfig.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    //
+    "baseUrl": "source",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@app/*": [
+        "./app/*"
+      ],
+      "@shared/*": [
+        "./shared/*"
+      ],
+      "@styles/*": [
+        "./styles/*"
+      ]
+    },
+    //
+    "types": [
+      "vite/client"
+    ],
+    //
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "source"
+  ],
+  "exclude": [
+    "dist"
+  ]
+}

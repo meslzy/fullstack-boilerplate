@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "source/index.ts",
+  "scripts": {
+    "dev": "bundle -m development -t server",
+    "build": "bundle -m production -t server",
+    "lint": "eslint source --fix"
+  },
+  "dependencies": {
+    "@colyseus/core": "^0.14.36",
+    "@colyseus/ws-transport": "^0.14.21",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "morgan": "^1.10.0",
+    "nocache": "^3.0.4",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.25.8",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.12",
+    "@types/morgan": "^1.9.3",
+    "bundle": "*"
+  },
+  "private": true
+}
