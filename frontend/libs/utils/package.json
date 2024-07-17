@@ -1,0 +1,10 @@
+{
+  "name": "@libs/utils",
+  "type": "module",
+  "main": "src/main.ts",
+  "scripts": {
+    "lint": "eslint src --fix",
+    "test": "echo test"
+  },
+  "private": true
+}

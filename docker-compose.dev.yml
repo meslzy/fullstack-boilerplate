@@ -1,0 +1,122 @@
+name: fullstack-boilerplate-dev
+
+services:
+  # Nginx
+  nginx:
+    container_name: nginx-dev
+    build:
+      target: development
+    ports:
+      - "6060:80"
+    depends_on:
+      # backend
+      - api
+      - mail
+      # frontend
+      - website
+    networks:
+      - bridge
+
+  # Services
+  database:
+    image: postgres:16-alpine
+    container_name: database-dev
+    hostname: database
+    env_file:
+      - ./infra/backend/.env
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - bridge
+    restart: unless-stopped
+
+  database-viewer:
+    image: dpage/pgadmin4
+    container_name: database-viewer-dev
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@database.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - database
+    ports:
+      - "5050:80"
+    networks:
+      - bridge
+    restart: unless-stopped
+
+  # Backend
+  mail:
+    container_name: mail-dev
+    hostname: mail
+    build:
+      context: backend
+      target: development
+      args:
+        - APP_NAME=mail
+    depends_on:
+      - database
+    volumes:
+      - ./backend/apps:/app/apps
+      - ./backend/shared:/app/shared
+    env_file:
+      - ./infra/backend/.env
+      - ./infra/backend/.env.dev
+    ports:
+      - "4001:4001"
+    networks:
+      - bridge
+    command: uvicorn apps.mail.main:app --host 0.0.0.0 --port 4001 --reload
+    restart: unless-stopped
+
+  api:
+    container_name: api-dev
+    hostname: api
+    build:
+      context: backend
+      target: development
+      args:
+        - APP_NAME=api
+    depends_on:
+      - mail
+    volumes:
+      - ./backend/apps:/app/apps
+      - ./backend/shared:/app/shared
+    env_file:
+      - ./infra/backend/.env
+      - ./infra/backend/.env.dev
+    ports:
+      - "4000:4000"
+    networks:
+      - bridge
+    command: uvicorn apps.api.main:app --host 0.0.0.0 --port 4000 --reload
+    restart: unless-stopped
+
+  # Frontend
+  website:
+    container_name: website-dev
+    hostname: website
+    build:
+      context: frontend
+      target: development
+      args:
+        - APP_NAME=website
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/apps/website/node_modules
+      - /app/apps/website/.next
+    environment:
+      - PORT=3000
+    env_file:
+      - ./infra/frontend/.env.dev
+    networks:
+      - bridge
+
+volumes:
+  database-data:
+
+networks:
+  bridge:
+    driver: "bridge"

@@ -1,0 +1,67 @@
+{
+  "extends": "@meslzy/tsconfig",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "~api/*": [
+        "api/*"
+      ],
+      "~app/*": [
+        "app/*"
+      ],
+      "~components/*": [
+        "components/*"
+      ],
+      "~layouts/*": [
+        "layouts/*"
+      ],
+      "~features/*": [
+        "features/*"
+      ],
+      "~library/*": [
+        "library/*"
+      ],
+      "~redux/*": [
+        "redux/*"
+      ],
+      "~styles/*": [
+        "styles/*"
+      ],
+      "~types/*": [
+        "types/*"
+      ],
+      "~utils/*": [
+        "utils/*"
+      ]
+    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "allowJs": true,
+    "noEmit": true
+  },
+  "include": [
+    "src",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next"
+  ]
+}

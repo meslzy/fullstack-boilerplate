@@ -1,0 +1,114 @@
+name: fullstack-boilerplate-prod
+
+services:
+  # Nginx
+  nginx:
+    container_name: nginx-prod
+    build:
+      target: production
+    ports:
+      - "6060:80"
+    depends_on:
+      # backend
+      - api
+      - mail
+      # frontend
+      - website
+    networks:
+      - bridge
+
+  # Services
+  database:
+    image: postgres:16-alpine
+    container_name: database-prod
+    hostname: database
+    env_file:
+      - ./infra/backend/.env
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - bridge
+    restart: unless-stopped
+
+  database-viewer:
+    image: dpage/pgadmin4
+    container_name: database-viewer-prod
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@database.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - database
+    ports:
+      - "5050:80"
+    networks:
+      - bridge
+    restart: unless-stopped
+
+  # Backend
+  mail:
+    container_name: mail-prod
+    hostname: mail
+    build:
+      context: backend
+      target: production
+      args:
+        - APP_NAME=mail
+    depends_on:
+      - database
+    env_file:
+      - ./infra/backend/.env
+      - ./infra/backend/.env.prod
+    ports:
+      - "4001:4001"
+    networks:
+      - bridge
+    command: uvicorn apps.mail.main:app --host 0.0.0.0 --port 4001
+    restart: unless-stopped
+
+  api:
+    container_name: api-prod
+    hostname: api
+    build:
+      context: backend
+      target: production
+      args:
+        - APP_NAME=api
+    depends_on:
+      - mail
+    env_file:
+      - ./infra/backend/.env
+      - ./infra/backend/.env.prod
+    ports:
+      - "4000:4000"
+    networks:
+      - bridge
+    command: uvicorn apps.api.main:app --host 0.0.0.0 --port 4000
+    restart: unless-stopped
+
+  # Frontend
+  website:
+    container_name: website-prod
+    hostname: website
+    build:
+      context: frontend
+      target: production
+      args:
+        - APP_NAME=website
+    environment:
+      - PORT=3000
+    env_file:
+      - ./infra/frontend/.env.prod
+    ports:
+      - "3000:3000"
+    networks:
+      - bridge
+    restart: on-failure
+
+volumes:
+  database-data:
+
+networks:
+  bridge:
+    driver: "bridge"

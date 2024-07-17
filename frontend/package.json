@@ -1,0 +1,27 @@
+{
+  "name": "frontend",
+  "type": "module",
+  "packageManager": "npm@10.8.2",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "test": "turbo test"
+  },
+  "dependencies": {
+    "turbo": "^2.0.7",
+    "typescript": "^5.5.3",
+    "@meslzy/tsconfig": "^0.2.6",
+    "@types/node": "^20.14.11"
+  },
+  "devDependencies": {
+    "@meslzy/eslint": "^1.0.2",
+    "eslint": "^9.7.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "private": true
+}
