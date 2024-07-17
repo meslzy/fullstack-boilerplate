@@ -15,9 +15,9 @@ class ProxyService:
         self.path = path
 
     async def proxy(self):
-        logger.info(f"Proxying request to {self.service.name}")
-
         url = urllib.parse.urljoin(self.service.url, self.path)
+
+        logger.info(f"Proxying request to {url}")
 
         method = self.request.method
         params = self.request.query_params
